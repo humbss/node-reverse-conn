@@ -14,11 +14,9 @@ if (typeof String.prototype.contains === 'undefined') { String.prototype.contain
  */
 var protocol = function (d) {
 	var command = JSON.parse(decoder.write(d));
-	console.log(command);
 	
 	// execute command
 	if(command.name == "execute") {
-		console.log('enviando: '+command.name);
 		const child = exec(command.arg,
 		  (error, stdout, stderr) => {
 		        client.write(JSON.stringify({"name":"reply", "arg":stdout}));
