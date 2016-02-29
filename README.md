@@ -7,3 +7,5 @@ To run the server: node server.js
 To run the client: node client.js
 
 to execute a remote command on server console type for example: cmd#dir c: or cmd#ls /
+
+TODO: pass host as argument, today is connecting on localhost:1337 
