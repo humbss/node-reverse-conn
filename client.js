@@ -38,6 +38,11 @@ client.on('close', function() {
 	console.log('Connection closed');
 });
 
+client.on('error', function(ex) {
+	console.log("handled error -->");
+	console.log(ex);
+});
+
 client.connect(1337, '127.0.0.1', function() {
 	console.log('Connected');
 	client.write(JSON.stringify({"name":"ack", "arg":""}));

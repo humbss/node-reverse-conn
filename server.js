@@ -8,10 +8,6 @@ var serverProtocol = require('./server-protocol.js');
  */
 if (typeof String.prototype.contains === 'undefined') { String.prototype.contains = function(it) { return this.indexOf(it) != -1; }; }
 
-
-//console.log('command list :D \n');
-//console.log('cmd#dir c: \n');
-
 var server = net.createServer(function(socket) {
   socket.pipe(socket);
 
@@ -22,6 +18,12 @@ var server = net.createServer(function(socket) {
     var cmd = decoder.write(data);
     protocol.process(cmd);
   });
+
+  socket.on('error', function(ex) {
+	console.log("handled error -->");
+	console.log(ex);
+  });
+
 });
 
 server.listen(1337, '127.0.0.1');
