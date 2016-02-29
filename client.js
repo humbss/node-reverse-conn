@@ -14,13 +14,15 @@ if (typeof String.prototype.contains === 'undefined') { String.prototype.contain
  */
 var protocol = function (d) {
 	var command = JSON.parse(decoder.write(d));
-	
+	var outBuff = "";
 	// execute command
 	if(command.name == "execute") {
 		const child = exec(command.arg,
 		  (error, stdout, stderr) => {
-		        client.write(JSON.stringify({"name":"reply", "arg":stdout}));
+		  		outBuff = stdout;
 		});
+		
+		client.write(JSON.stringify({"name":"reply", "arg":outBuff}));
 	}
 
 	// status command

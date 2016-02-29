@@ -19,6 +19,8 @@ ServerProtocol.prototype.askCommand = function () {
 			rl.question('Enter what you want to execute: ', (cmdArg) => {
 			    var cmdToSend = {"name":"execute", "arg":cmdArg};
 				this.client.write(JSON.stringify(cmdToSend));
+
+				this.askCommand(); //re ask for some command
 			});
 		}
 
@@ -30,7 +32,7 @@ ServerProtocol.prototype.askCommand = function () {
 ServerProtocol.prototype.process = function(cmd) {
 	var command = JSON.parse(cmd);
 
-	console.log('received: '+command.name);
+	//console.log('received: '+command.name);
 
 	if(command.name == 'ack') {
 		this.askCommand();
@@ -38,8 +40,6 @@ ServerProtocol.prototype.process = function(cmd) {
 
 	if(command.name == 'reply') {
 		console.log(command.arg);
-		console.log('--------------------------------------------- eof');
-		this.askCommand();
 	}
 };
 
