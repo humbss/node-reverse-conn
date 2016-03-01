@@ -17,7 +17,7 @@ ServerProtocol.prototype.updateSockets = function(sockets) {
 
 // command pront
 ServerProtocol.prototype.askCommand = function () {
-	rl.question('\nEnter a command (execute, status, list): ', (cmdType) => {
+	rl.question('\nEnter a command (execute, list): ', (cmdType) => {
 	
 		// Execute command
 		if(cmdType == 'execute') {
